@@ -5,11 +5,39 @@ import { config } from "dotenv";
 config()
 
 const app = express();
+app.use(express.json())
 
 app.get("/ping", (req, res) => {
-    res.json({
+    return res.json({
         id: 1,
         data: "abcde"
+    })
+})
+
+// http://localhost:8000?name=ayush
+app.post("/name", (req, res) => {
+    const name = req.query.name;
+    return res.json({
+        name
+    })
+})
+
+// http://localhost:8000/user/ayush
+app.post("/user/:name", (req, res) => {
+    const name = req.params.name;
+    return res.json({
+        name
+    })
+})
+
+// http://localhost:8000/username
+/**
+ * {"name": "ayush"}
+ */
+app.post("/username", (req, res) => {
+    const username = req.body.name
+    return res.json({
+        username: name
     })
 })
 
