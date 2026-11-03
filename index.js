@@ -1,8 +1,8 @@
 // const express = require("express"); older way
 // 1st express is variable name and second one is the file from which the express is getting imported
 import express from "express";
-import { config } from "dotenv";
-config()
+import "dotenv/config"
+import databaseConnection from "./dbConnection.js";
 
 const app = express();
 app.use(express.json())
@@ -46,5 +46,6 @@ const PORT = process.env.PORT;
 
 // http://localhost:4000/
 app.listen(PORT, () => {
+    databaseConnection()
     console.log(`App is running on ${PORT}`)
 })
