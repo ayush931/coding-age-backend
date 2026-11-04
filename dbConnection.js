@@ -6,17 +6,15 @@ if (!MONGO_URI) {
     console.log("MONGO_URI is missing")
 }
 
-function databaseConnection() {
+async function databaseConnection() {
     try {
-        const connection = mongoose.connect(MONGO_URI)
+        const { connection } = await mongoose.connect(MONGO_URI)
         if (connection) {
-            console.log("MONGODB connected")
-        }
-        else {
-            console.log("Failed to connect MONGODB")
+            console.log("MONGODB connected", connection.host)
         }
     } catch (error) {
         console.log("Database server error: ", error)
+        process.exit()
     }
 }
 

@@ -16,7 +16,7 @@ app.get("/ping", (req, res) => {
 
 // http://localhost:8000?name=ayush
 app.post("/name", (req, res) => {
-    const name = req.query.name;
+    const { name } = req.query;
     return res.json({
         name
     })
@@ -24,7 +24,7 @@ app.post("/name", (req, res) => {
 
 // http://localhost:8000/user/ayush
 app.post("/user/:name", (req, res) => {
-    const name = req.params.name;
+    const { name } = req.params;
     return res.json({
         name
     })
@@ -35,9 +35,9 @@ app.post("/user/:name", (req, res) => {
  * {"name": "ayush"}
  */
 app.post("/username", (req, res) => {
-    const username = req.body.name
+    const { username } = req.body
     return res.json({
-        username: name
+        username
     })
 })
 
@@ -45,7 +45,7 @@ app.post("/username", (req, res) => {
 const PORT = process.env.PORT;
 
 // http://localhost:4000/
-app.listen(PORT, () => {
-    databaseConnection()
+app.listen(PORT, async () => {
+    await databaseConnection()
     console.log(`App is running on ${PORT}`)
 })
