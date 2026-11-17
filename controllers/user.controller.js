@@ -16,3 +16,7 @@ export const userController = async (req, res) => {
         newData
     })
 }
+
+export const loginController = async (req, res) => {
+    
+}
