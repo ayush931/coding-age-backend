@@ -2,10 +2,12 @@
   "name": "coding-age-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon index.js"
+    "dev": "node src/server.js",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "repository": {
     "type": "git",
@@ -20,10 +22,13 @@
   },
   "homepage": "https://github.com/ayush931/coding-age-backend#readme",
   "dependencies": {
-    "dotenv": "^18.0.9",
+    "bcrypt": "^6.0.0",
+    "dotenv": "^18.0.10",
     "express": "^5.3.0",
-    "mongoose": "^9.11.4",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.12.2",
     "morgan": "^1.12.1",
-    "nodemon": "^3.1.14"
+    "nodemon": "^3.1.14",
+    "prettier": "^3.10.1"
   }
 }

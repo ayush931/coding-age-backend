@@ -1,0 +1,36 @@
+
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
+out/
+coverage/
+
+# Environment files
+.env
+.env.*
+
+# Package lock files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Logs
+logs/
+*.log
+
+# Cache
+.cache/
+.parcel-cache/
+.next/
+.nuxt/
+
+# Generated files
+generated/
+*.min.js
+*.min.css
+
+# Other
+.DS_Store
