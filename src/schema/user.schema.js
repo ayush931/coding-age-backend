@@ -1,6 +1,7 @@
-import { Schema, Model } from "mongoose";
+import { Schema, Model, model } from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import crypto from "crypto";
 
 const userSchema = new Schema({
     name: {
@@ -34,7 +35,7 @@ const userSchema = new Schema({
     },
     avatar: {
         public_id: String,
-        secure_id: String
+        secure_url: String
     },
     role: {
         type: String,
@@ -52,14 +53,15 @@ const userSchema = new Schema({
 })
 
 // this function runs before saving the user data to check and hash the password if not done or password is updated
-userSchema.pre('save', async function(next) {
+userSchema.pre('save', async function() {
     if (!this.isModified('password')) {
-        return next()
+        return
     }
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt)
 })
 
+// controllers
 userSchema.methods = {
     generateJwtToken: async function() {
         return await jwt.sign({
@@ -69,7 +71,28 @@ userSchema.methods = {
         }, 
             process.env.JWT_SECRET, 
         {
-           expiresIn: process.env.JWT_EXPIRY 
+           expiresIn: process.env.JWT_EXPIRY
         })
+    },
+
+    // compare password
+    comparePassword: async function(plainTextPassword) {
+        return await bcrypt.compare(plainTextPassword, this.password)  // boolean result
+    },
+
+    // using in production, this thing is done via redis
+    generatePasswordResetToken: async function() {
+        // generating a reset token using the crypto
+        const resetToken = crypto.randomBytes(20).toString('hex');
+
+        // hasing the generated token
+        this.forgotPasswordToken = crypto.createHash('sha256').update(resetToken).digest('hex');
+
+        // setting its expiry
+        this.forgotPasswordExpiry = Date.now() + 15 * 60 * 1000;
+        return resetToken
     }
 }
+
+const User = model('User', userSchema);
+export default User;
